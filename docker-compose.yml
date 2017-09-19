@@ -1,0 +1,17 @@
+version: '2'
+
+services:
+  postgres:
+    restart: always
+    image: kiasaki/alpine-postgres:9.5
+    environment:
+      - POSTGRES_USER:'foo'
+      - POSTGRES_PASSWORD:'foobar'
+      - POSTGRES_DB:'localhost'
+    ports:
+      - '5432:5432'
+    volumes:
+      - database:/var/lib/postgresql/data
+
+volumes:
+  database:
