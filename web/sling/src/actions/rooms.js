@@ -47,22 +47,3 @@ export function connectToChannel(socket, roomId) {
     return false;
   };
 }
-
-export function leaveChannel(channel) {
-  return (dispatch) => {
-    if (channel) {
-      channel.leave();
-    }
-    dispatch({ type: 'USER_LEFT_ROOM' });
-  };
-}
-
-export function createMessage(channel, data) {
-  return dispatch => new Promise((resolve, reject) => {
-    channel.push('new_message', data)
-      .receive('ok', () => resolve(
-        dispatch(reset('newMessage'))
-      ))
-      .receive('error', () => reject());
-  });
-}

@@ -60,7 +60,6 @@ defmodule Sling.SessionController do
   end
 
   defp check_password(user, password) do
-    IEx.pry
     case user do
       nil -> Comeonin.Bcrypt.dummy_checkpw()
       _ -> Comeonin.Bcrypt.checkpw(password, user.password_hash)

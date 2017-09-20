@@ -28,6 +28,7 @@ export default function (state = initialState, action) {
             ],
         };
         case 'ROOM_JOINED':
+        debugger
         return {
             ...state,
             currentUserRooms: [

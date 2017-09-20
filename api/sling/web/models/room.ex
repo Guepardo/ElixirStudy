@@ -1,3 +1,4 @@
+require IEx
 defmodule Sling.Room do
   use Sling.Web, :model
 
@@ -12,7 +13,9 @@ defmodule Sling.Room do
   @doc """
   Builds a changeset based on the `struct` and `params`.
   """
-  def changeset(struct, params \\ %{}) do
+  def changeset(struct, %{ "name" => name } = params \\ %{}) do
+    params = Map.put(params, "topic", name <> " Working around")
+
     struct
     |> cast(params, [:name, :topic])
     |> validate_required([:name, :topic])

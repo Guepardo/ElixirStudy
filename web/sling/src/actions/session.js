@@ -1,17 +1,21 @@
 import { reset } from 'redux-form';
 import api from '../api';
+import { Socket } from 'phoenix';
 import { fetchUserRooms } from './rooms';
 
-function setCurrentUser(dispatch, response) {
+const API_URL = process.env.REACT_APP_API_URL; // new line
+const WEBSOCKET_URL = API_URL.replace(/(https|http)/, 'ws').replace('/api', ''); // new line
+
+export function setCurrentUser(dispatch, response) {
   localStorage.setItem('token', JSON.stringify(response.meta.token));
   dispatch({ type: 'AUTHENTICATION_SUCCESS', response });
   dispatch(fetchUserRooms(response.data.id));
-  connectToSocket(dispatch); // new line
+  connectToSocket(dispatch);
 }
 
 export function login(data, router) {
   return dispatch => api.post('/sessions', data)
-    .then((response) => {
+  .then((response) => {
       setCurrentUser(dispatch, response);
       dispatch(reset('login'));
       router.transitionTo('/');
@@ -48,6 +52,16 @@ export function authenticate() {
         window.location = '/login';
       });
   };
+}
+
+export function connectToSocket(dispatch) {
+  const token = JSON.parse(localStorage.getItem('token'));
+  const socket = new Socket(`${WEBSOCKET_URL}/socket`, {
+    params: { token },
+    logger: (kind, msg, data) => { console.log(`${kind}: ${msg}`, data); }
+  });
+  socket.connect();
+  dispatch({ type: 'SOCKET_CONNECTED', socket });
 }
 
 export const unauthenticate = () => ({ type: 'AUTHENTICATION_FAILURE' });

@@ -21,6 +21,10 @@ defmodule Sling.Router do
     get "/", PageController, :index
   end
 
+  resources "/rooms", RoomController, only: [:index, :create] do
+    resources "/messages", MessageController, only: [:index]
+  end
+
   scope "/api", Sling do
     pipe_through :api
 
