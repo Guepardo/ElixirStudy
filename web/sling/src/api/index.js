@@ -12,6 +12,7 @@ function headers() {
 
 function parseResponse(response) {
   return response.json().then((json) => {
+    debugger
     if (!response.ok) {
       return Promise.reject(json);
     }

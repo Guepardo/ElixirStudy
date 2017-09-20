@@ -40,7 +40,9 @@ defmodule Sling.Mixfile do
       {:gettext, "~> 0.11"},
       {:cowboy, "~> 1.0"},
       {:comeonin, "~> 2.5"},
-      {:guardian, "~> 0.14.5"}
+      {:guardian, "~> 0.14.5"},
+      {:cors_plug, "~> 1.1"},
+      {:scrivener_ecto, "~> 1.0"}
     ]
   end
 

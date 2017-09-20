@@ -35,6 +35,7 @@ defmodule Sling.Endpoint do
     store: :cookie,
     key: "_sling_key",
     signing_salt: "S3mVLIDS"
-
+  
+  plug CORSPlug
   plug Sling.Router
 end
