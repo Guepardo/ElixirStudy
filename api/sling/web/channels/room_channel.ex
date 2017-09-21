@@ -1,7 +1,7 @@
 defmodule Sling.RoomChannel do
   use Sling.Web, :channel
 
-  def join("rooms:" <> room_id, _params, socket) do
+  def join("room:" <> room_id, _params, socket) do
     room = Repo.get!(Sling.Room, room_id)
 
     page =
@@ -33,7 +33,7 @@ defmodule Sling.RoomChannel do
       socket.assigns.room
       |> build_assoc(:messages, user_id: socket.assigns.current_user.id)
       |> Sling.Message.changeset(params)
-
+    
     case Repo.insert(changeset) do
       {:ok, message} ->
         broadcast_message(socket, message)

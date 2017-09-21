@@ -1,4 +1,3 @@
-require IEx
 defmodule Sling.Room do
   use Sling.Web, :model
 
@@ -6,7 +5,8 @@ defmodule Sling.Room do
     field :name, :string
     field :topic, :string
     many_to_many :users, Sling.User, join_through: "user_rooms"
-
+    has_many :messages, Sling.Message, foreign_key: :room_id
+    
     timestamps()
   end
 

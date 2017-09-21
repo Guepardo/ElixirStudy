@@ -3,8 +3,8 @@ const initialState = {
   currentRoom: {},
   messages: [],
   presentUsers: [],
-  loadingOlderMessages: false, // new line
-  pagination: { // new line
+  loadingOlderMessages: false, 
+  pagination: { 
     total_pages: 0,
     total_entries: 0,
     page_size: 0,
@@ -15,12 +15,13 @@ const initialState = {
 export default function (state = initialState, action) {
   switch (action.type) {
     case 'ROOM_CONNECTED_TO_CHANNEL':
+      debugger
       return {
         ...state,
         channel: action.channel,
         currentRoom: action.response.room,
         messages: action.response.messages.reverse(),
-        pagination: action.response.pagination, // new line
+        pagination: action.response.pagination, 
       };
     case 'USER_LEFT_ROOM':
       return initialState;
@@ -37,12 +38,12 @@ export default function (state = initialState, action) {
         ...state,
         presentUsers: action.presentUsers,
       };
-    case 'FETCH_MESSAGES_REQUEST': // new case
+    case 'FETCH_MESSAGES_REQUEST':
       return {
         ...state,
         loadingOlderMessages: true,
       };
-    case 'FETCH_MESSAGES_SUCCESS': // new case
+    case 'FETCH_MESSAGES_SUCCESS':
       return {
         ...state,
         messages: [
@@ -52,7 +53,7 @@ export default function (state = initialState, action) {
         pagination: action.response.pagination,
         loadingOlderMessages: false,
       };
-    case 'FETCH_MESSAGES_FAILURE': // new case
+    case 'FETCH_MESSAGES_FAILURE':
       return {
         ...state,
         loadingOlderMessages: false,
